@@ -5,6 +5,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
-import static qa.guru.steps.gitHubIssuesSteps.*;
+import static qa.guru.steps.GitHubIssuesSteps.*;
 
 @Feature("Issue в репозитории")
 @Story("Создание Issue")
@@ -26,10 +27,14 @@ class GitHubIssuesTest {
     public static String ISSUES_NAME = "My test issue";
 
     @BeforeAll
-    static void beforeAll() {
+    static void setup() {
         Configuration.baseUrl = "https://github.com";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
+    }
+
+    @BeforeEach
+    void addListeners() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
@@ -37,7 +42,7 @@ class GitHubIssuesTest {
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Отображение Issue для неавторизованного пользователя")
     void selenideIssueSearchByNameTest() {
-        open("/");
+        open("");
         $(".header-search-button").click();
         $("#query-builder-test").sendKeys(REPOSITORY);
         $("#query-builder-test").submit();
@@ -50,7 +55,7 @@ class GitHubIssuesTest {
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Отображение Issue для неавторизованного пользователя")
     void lambdaIssueSearchByNameTest() {
-        step("Открыть главную страницу", () -> open("/"));
+        step("Открыть главную страницу", () -> open(""));
         step("Найти репозиторий " + REPOSITORY, () -> {
             $(".header-search-button").click();
             $("#query-builder-test").sendKeys(REPOSITORY);

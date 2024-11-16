@@ -8,11 +8,11 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class gitHubIssuesSteps {
+public class GitHubIssuesSteps {
 
     @Step("Открыть главную страницу")
     public static void openMainPage() {
-        open("/");
+        open("");
     }
 
     @Step("Найти репозиторий {name}")
